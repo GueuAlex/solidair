@@ -17,7 +17,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          login ? "Don’t have an Account ? " : "Already have an Account ? ",
+          login ? "Pas encore inscrit ? " : "Déjà inscrit ? ",
           style: const TextStyle(
             color: Palette.primaryColor,
           ),
@@ -25,7 +25,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
         GestureDetector(
           onTap: press as void Function()?,
           child: Text(
-            login ? "Sign Up" : "Sign In",
+            login ? 'S\'inscrire' : "Se connecter",
             style: const TextStyle(
               color: Palette.appPrimaryColor,
               fontWeight: FontWeight.bold,

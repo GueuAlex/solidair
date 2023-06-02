@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solidair/config/palette.dart';
 
+import '../../../config/palette.dart';
 import '../../../models/order.dart';
 import 'order_card.dart';
 
@@ -11,14 +11,15 @@ class LatestOrders extends StatelessWidget {
       deliveryAddress: "New Times Square",
       arrivalDate: DateTime(2020, 1, 23),
       placedDate: DateTime(2020, 1, 17),
-      status: OrderStatus.DELIVERING,
+      title: 'Demande de prêt',
     ),
     Order(
       id: 536,
       deliveryAddress: "Victoria Square",
       arrivalDate: DateTime(2020, 1, 21),
       placedDate: DateTime(2020, 1, 19),
-      status: OrderStatus.PICKING_UP,
+      title: 'Demande de soutien',
+      status: true,
     )
   ];
 
@@ -39,14 +40,14 @@ class LatestOrders extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               Text(
-                "Latest Orders",
+                "Mes demandes",
                 style: TextStyle(
                   color: Color.fromRGBO(19, 22, 33, 1),
                   fontSize: 18.0,
                 ),
               ),
               Text(
-                "View All",
+                "Voir Tout",
                 style: TextStyle(
                   color: Palette.primaryColor,
                   fontWeight: FontWeight.w600,

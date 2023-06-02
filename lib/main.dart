@@ -7,7 +7,9 @@ import 'screens/signin/signin_screen.dart';
 import 'splash/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {

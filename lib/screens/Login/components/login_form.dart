@@ -6,13 +6,22 @@ import '../../../config/palette.dart';
 import '../../../constants.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/infos_column.dart';
-import '../../Signup/signup_screen.dart';
+import '../../signin/signin_screen.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  ////////////////////////::
+  bool isVisible1 = true;
+  bool isVisible2 = true;
+  //////////////////////////:
   @override
   Widget build(BuildContext context) {
     ///////////
@@ -22,6 +31,14 @@ class LoginForm extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       cursorColor: kPrimaryColor,
+      onChanged: (value) {
+        setState(() {
+          isVisible1 = false;
+        });
+      },
+      onTap: () => setState(() {
+        isVisible1 = false;
+      }),
       style: const TextStyle(
         color: Palette.appPrimaryColor,
         fontSize: 14,
@@ -31,7 +48,7 @@ class LoginForm extends StatelessWidget {
       decoration: InputDecoration(
         border: InputBorder.none,
         label: AppText.medium(
-          "Your email",
+          isVisible1 ? "Votre email" : '',
           color: Palette.appPrimaryColor,
         ),
       ),
@@ -42,6 +59,14 @@ class LoginForm extends StatelessWidget {
     final passwordField = TextFormField(
       textInputAction: TextInputAction.done,
       obscureText: true,
+      onChanged: (value) {
+        setState(() {
+          isVisible2 = false;
+        });
+      },
+      onTap: () => setState(() {
+        isVisible2 = false;
+      }),
       style: const TextStyle(
         color: Palette.appPrimaryColor,
         fontSize: 14,
@@ -50,7 +75,8 @@ class LoginForm extends StatelessWidget {
       cursorColor: kPrimaryColor,
       decoration: InputDecoration(
         border: InputBorder.none,
-        label: AppText.medium("Your password", color: Palette.appPrimaryColor),
+        label: AppText.medium(isVisible2 ? "Votre mot de  passe" : '',
+            color: Palette.appPrimaryColor),
       ),
     );
     ///////////////
@@ -78,9 +104,9 @@ class LoginForm extends StatelessWidget {
           CustomButton(
             color: Palette.primaryColor,
             width: double.infinity,
-            height: 35,
+            height: 40,
             radius: 5,
-            text: 'login'.toUpperCase(),
+            text: 'CONNEXION'.toUpperCase(),
             onPress: () {
               Navigator.of(context)
                   .pushNamedAndRemoveUntil('/', (route) => false);
@@ -89,7 +115,7 @@ class LoginForm extends StatelessWidget {
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
             press: () {
-              Navigator.pushNamed(context, SignUpScreen.routeName);
+              Navigator.pushNamed(context, SigninScreen.routeName);
             },
           ),
         ],

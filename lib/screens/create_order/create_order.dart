@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:solidair/config/functions.dart';
 import 'package:solidair/widgets/custom_button.dart';
 import 'package:solidair/widgets/infos_column.dart';
 
@@ -17,21 +18,29 @@ class CreateOrderScreen extends StatefulWidget {
 }
 
 class _CreateOrderScreenState extends State<CreateOrderScreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentPage = 0;
+  ////////////////////////////////////////////////////////////
+  ///
+  ///
+  bool isVisible = true;
 
-  List<String> requestType = [
-    'Request type 1',
-    'Request type 2',
-    'Request type 3',
-    'Request type 4',
-    'Request type 5',
-    'Request type 6',
-    'Request type 3',
-    'Request type 4',
-    'Request type 5',
-    'Request type 6',
+  //////////////////////////////////////////////////////////////////////
+////////////////// selected service type confings ////////////////////
+//////////////////////////////////////////////////////////////////////
+  ///
+  ///
+  final List<String> _selectedOption = [
+    'Demande de Prêt',
+    'Demande de Soutien',
+    'Projet Immobilier',
+    'Projet Social'
   ];
+  String _selectedType = '';
+
+  ///
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +48,14 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
     ///
     ///
     final emailField = TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       cursorColor: kPrimaryColor,
+      onChanged: (value) {
+        setState(() {
+          isVisible = false;
+        });
+      },
       style: const TextStyle(
         color: Palette.appPrimaryColor,
         fontSize: 14,
@@ -51,7 +65,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
       decoration: InputDecoration(
         border: InputBorder.none,
         label: AppText.medium(
-          "Enter amount",
+          isVisible ? "Entrez un montant" : '',
           color: Palette.appPrimaryColor,
         ),
       ),
@@ -59,20 +73,6 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
     //////////////////
     ///
     ///
-    final passwordField = TextFormField(
-      textInputAction: TextInputAction.done,
-      obscureText: true,
-      style: const TextStyle(
-        color: Palette.appPrimaryColor,
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-      ),
-      cursorColor: kPrimaryColor,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        label: AppText.medium("Your password", color: Palette.appPrimaryColor),
-      ),
-    );
     ///////////////
     ///
     ///
@@ -95,7 +95,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
             color: Colors.black.withOpacity(0.4),
             child: Center(
               child: AppText.large(
-                'Faite votre demande de prestation !',
+                'Faites votre demande de prestation !',
                 color: Palette.whiteColor,
                 fontSize: 28,
                 textAlign: TextAlign.left,
@@ -119,7 +119,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    child: SvgPicture.asset('assets/icons/login.svg'),
+                    child: SvgPicture.asset('assets/icons/injury-amico.svg'),
                   ),
                 ),
                 Expanded(
@@ -134,36 +134,41 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                         });
                       },
                       children: [
-                        Container(
-                          height: 50,
-                          width: double.infinity,
-                          // color: Colors.red,
-                          child: Center(
-                            child: InfosColumn(
-                              height: 50,
-                              color: Palette.primaryColor,
-                              opacity: 0.2,
-                              label: 'member',
-                              widget: Expanded(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    AppText.medium(
-                                      'Select member',
-                                      color: Palette.appPrimaryColor,
-                                    ),
-                                    const Icon(
-                                      CupertinoIcons.chevron_down,
-                                      color: Palette.appPrimaryColor,
-                                    )
-                                  ],
+                        InkWell(
+                          onTap: () => _showBottomSheet(context),
+                          child: SizedBox(
+                            height: 50,
+                            width: double.infinity,
+                            // color: Colors.red,
+                            child: Center(
+                              child: InfosColumn(
+                                height: 50,
+                                color: Palette.primaryColor,
+                                opacity: 0.2,
+                                label: 'Services',
+                                widget: Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AppText.medium(
+                                        _selectedType.isEmpty
+                                            ? 'Sélectionnez un type de service'
+                                            : _selectedType,
+                                        color: Palette.appPrimaryColor,
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Palette.appPrimaryColor,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        Container(
+                        /*    SizedBox(
                           height: 50,
                           width: double.infinity,
                           child: Center(
@@ -178,7 +183,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     AppText.medium(
-                                      'Select a request type',
+                                      'Select a request',
                                       color: Palette.appPrimaryColor,
                                     ),
                                     const Icon(
@@ -190,19 +195,20 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                               ),
                             ),
                           ),
-                        ),
-                        Container(
+                        ), */
+                        SizedBox(
                           height: 50,
                           width: double.infinity,
                           child: Center(
                             child: InfosColumn(
-                                height: 50,
-                                color: Palette.appPrimaryColor,
-                                opacity: 0.2,
-                                label: 'amount',
-                                widget: Expanded(
-                                  child: emailField,
-                                )),
+                              height: 50,
+                              color: Palette.appPrimaryColor,
+                              opacity: 0.2,
+                              label: 'Amount',
+                              widget: Expanded(
+                                child: emailField,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -226,7 +232,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                                   width: double.infinity,
                                   height: 40,
                                   radius: 5,
-                                  text: 'Back',
+                                  text: 'RETOUR',
                                   onPress: _currentPage > 0
                                       ? () => _pageController.previousPage(
                                           duration:
@@ -244,14 +250,36 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                             width: double.infinity,
                             height: 40,
                             radius: 5,
-                            text: _currentPage == 2 ? 'Done' : 'Next',
-                            onPress: _currentPage < 2
-                                ? () => _pageController.nextPage(
+                            text: _currentPage == 1 ? 'SOUMETTRE' : 'SUIVANT',
+                            onPress: _currentPage < 1
+                                ? () {
+                                    _pageController.nextPage(
                                       duration:
                                           const Duration(microseconds: 300),
                                       curve: Curves.ease,
-                                    )
-                                : () {},
+                                    );
+                                  }
+                                : () {
+                                    print(_currentPage);
+                                    if (_currentPage == 1) {
+                                      Functions.showLoadingSheet(ctxt: context);
+                                      Future.delayed(const Duration(seconds: 3))
+                                          .then(
+                                        (_) {
+                                          Navigator.pop(context);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: AppText.medium(
+                                                'Demande créé avec succès',
+                                                color: Palette.greyWhiteColor,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
                           ),
                         ),
                       ],
@@ -263,4 +291,73 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
       ],
     );
   }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 300,
+          decoration: const BoxDecoration(
+            color: Palette.whiteColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0),
+              topRight: Radius.circular(25.0),
+            ),
+          ),
+          child: sheetContent(),
+        );
+      },
+    );
+  }
+
+  Container sheetContent() => Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Container(
+              width: 60,
+              height: 5,
+              decoration: BoxDecoration(
+                color: Palette.greyColor.withOpacity(0.6),
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 15.5),
+              child: Text(
+                ' ',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  _selectedOption.length,
+                  (index) => Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      top: 15,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _selectedType = _selectedOption[index];
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: AppText.medium(
+                        _selectedOption[index],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
 }

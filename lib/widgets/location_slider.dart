@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solidair/config/palette.dart';
 
+import '../config/palette.dart';
 import '../models/location.dart';
 
 class LocationSlider extends StatelessWidget {
@@ -13,19 +13,31 @@ class LocationSlider extends StatelessWidget {
     // Make a list to represent each card
     List<Location> locations = [
       Location(
-        address: "Kings Street 20",
+        address: "Demande de prêt",
         color: Palette.appPrimaryColor,
-        state: "Bucharest",
+        state: "Besoin de financement pour des projets?",
         imagePath: "assets/images/house1.png",
       ),
       Location(
-        address: "Victory Square 18",
+        address: "Demande de soutien",
         color: const Color.fromRGBO(237, 116, 41, 1),
-        state: "Bucharest",
+        state: "Un événement heureux ou malheureux?",
+        imagePath: "assets/images/house2.png",
+      ),
+      Location(
+        address: "Projet Immobilier",
+        color: const Color.fromARGB(255, 52, 133, 151),
+        state: "Préparez sereinement votre retraite ...",
+        imagePath: "assets/images/house2.png",
+      ),
+      Location(
+        address: "Projet Social",
+        color: const Color.fromARGB(255, 48, 85, 138),
+        state: "Intégrez l'équipe Sociale pour apporter ...",
         imagePath: "assets/images/house2.png",
       )
     ];
-    return Container(
+    return SizedBox(
       height: 90,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
@@ -79,7 +91,7 @@ class LocationSlider extends StatelessWidget {
                         TextSpan(
                           text: locations[index].state,
                           style: const TextStyle(
-                            fontSize: 16.0,
+                            fontSize: 13.0,
                           ),
                         )
                       ],
@@ -91,7 +103,7 @@ class LocationSlider extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
+          return const SizedBox(
             width: 15.0,
           );
         },

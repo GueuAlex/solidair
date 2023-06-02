@@ -20,7 +20,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           width: double.infinity,
           height: 40,
           radius: 5,
-          text: 'login'.toUpperCase(),
+          text: 'se connecter'.toUpperCase(),
           onPress: () {
             Navigator.of(context).pushNamedAndRemoveUntil(
               LoginScreen.routeName,
@@ -34,7 +34,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           width: double.infinity,
           height: 40,
           radius: 5,
-          text: 'sign up'.toUpperCase(),
+          text: 's\'inscrire'.toUpperCase(),
           onPress: () {
             Navigator.of(context).pushNamedAndRemoveUntil(
               SigninScreen.routeName,

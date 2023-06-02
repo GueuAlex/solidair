@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:solidair/config/palette.dart';
+import 'package:solidair/models/odoo.dart';
 
 import '../../widgets/location_slider.dart';
 import 'widgets/latest_orders.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String routeName = 'homeScreen';
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    OdooInit().login();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                               ),
                               TextSpan(
-                                text: "FlutterPanda!",
+                                text: "KRA Tehua",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
@@ -77,8 +89,21 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Image.asset(
-                          "assets/images/dp.png",
+                        Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            //shape: BoxShape.circle,
+                            border: Border.all(
+                              width: 3,
+                              color: const Color.fromARGB(255, 14, 73, 93),
+                            ),
+                            borderRadius: BorderRadius.circular(50),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/profil.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         )
                       ],
                     )

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:solidair/config/app_text.dart';
+import 'package:solidair/config/palette.dart';
 
 import '../../../models/order.dart';
 
@@ -9,7 +11,7 @@ class OrderCard extends StatelessWidget {
   OrderCard({super.key, required this.order});
 
   // For formatting date
-  final DateFormat formatter = DateFormat("yyyy MM dd");
+  final DateFormat formatter = DateFormat("dd MMM yyyy");
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class OrderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getOrderStatusText(order.status),
+                    order.title,
                     style: const TextStyle(
                       color: Color.fromRGBO(19, 22, 33, 1),
                       fontSize: 16.0,
@@ -48,11 +50,46 @@ class OrderCard extends StatelessWidget {
                   const SizedBox(
                     height: 10.0,
                   ),
-                  textRow("Placed On", formatter.format(order.placedDate)),
+                  textRow(
+                    "Date de demande",
+                    AppText.medium(
+                      formatter.format(
+                        order.placedDate,
+                      ),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(
                     height: 5.0,
                   ),
-                  textRow("Delivery On", formatter.format(order.arrivalDate))
+                  textRow(
+                    "Status",
+                    order.status
+                        ? Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: const Color.fromARGB(255, 37, 155, 56)
+                                    .withOpacity(0.2)),
+                            child: AppText.medium(
+                              'Approuvée',
+                              fontSize: 11,
+                              color: const Color.fromARGB(255, 37, 155, 56),
+                            ),
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Palette.appPrimaryColor.withOpacity(0.2),
+                            ),
+                            child: AppText.medium(
+                              '  En cours',
+                              color: Palette.appPrimaryColor,
+                              fontSize: 11,
+                            ),
+                          ),
+                  )
                 ],
               ),
             ),
@@ -63,7 +100,7 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-Widget textRow(String textOne, String textTwo) {
+Widget textRow(String textOne, Widget textTwo) {
   return Wrap(
     children: [
       Text(
@@ -76,20 +113,14 @@ Widget textRow(String textOne, String textTwo) {
       const SizedBox(
         width: 4.0,
       ),
-      Text(
-        textTwo,
-        style: const TextStyle(
-          color: Color.fromRGBO(19, 22, 33, 1),
-          fontSize: 14.0,
-        ),
-      ),
+      textTwo,
     ],
   );
 }
 
-Widget getOrderIconWidget(OrderStatus status) {
+Widget getOrderIconWidget(bool status) {
   switch (status) {
-    case OrderStatus.PICKING_UP:
+    case true:
       return Container(
         width: 37,
         height: 37,
@@ -103,7 +134,7 @@ Widget getOrderIconWidget(OrderStatus status) {
           color: Color.fromRGBO(221, 40, 81, 1),
         ),
       );
-    case OrderStatus.DELIVERING:
+    case false:
       return Container(
         width: 37,
         height: 37,
